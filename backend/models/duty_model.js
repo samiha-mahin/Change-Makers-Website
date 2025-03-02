@@ -30,7 +30,7 @@ const dutySchema = new mongoose.Schema({
         type: Number,
         required: true
       },
-    company: {
+    organization: {
         type: mongoose.Schema.Types.ObjectId,
         ref:'Organization',
         required: true
