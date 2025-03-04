@@ -1,4 +1,4 @@
-import { Duty } from "../models/duty_model";
+import { Duty } from "../models/duty_model.js";
 
 export const postDuty = async (req, res) => {
     try {
