@@ -65,3 +65,26 @@ export const getAllDuties = async (req,res) =>{
         console.log(error);
     }
 }
+//user will get data
+//Imagine you click on a job listing titled "Backend Developer". The URL for the listing might look like "/jobs/12345".Here, 12345 is the unique identifier for that job.The system uses the 12345 ID to search the database for that specific job.If found, the system returns the job details.If there’s no job with ID 12345, the system informs you that the job doesn’t exist (404 error).If the job is found, the system sends the details (title, description, company, etc.) back to you.
+
+export const getDutyById = async (req,res) =>{
+    try {
+        const dutyId = req.params.id;
+        const duty = await Duty.findById(dutyId).populate({
+            path:"applications",
+        });
+        if(!duty){
+            return res.status(404).json({
+                message: "No duty found",
+                success: false
+            });
+        }
+        return res.status(200).json({
+            duty,
+            success: true
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
