@@ -88,3 +88,24 @@ export const getDutyById = async (req,res) =>{
         console.log(error);
     }
 };
+export const getAdminDuties = async (req,res) =>{
+    try {
+        const adminId = req.id;
+        const duties = await Job.find({created_by:adminId}).populate({
+            path:"organization",
+            createdAt: -1
+        });
+        if(!duties){
+            return res.status(404).json({
+                message: "Duties Not Found",
+                success: false,
+              });
+        }
+        return res.status(200).json({
+            duties,
+            success: true
+          });
+    } catch (error) {
+        console.log(error)
+    }
+}
