@@ -55,6 +55,24 @@ export const getOrganizations = async (req,res) => {
         console.log(error);
     }
 }
+export const getOrganizationById = async (req, res) => {
+    try {
+      const organizationId = req.params.id;
+      const organization = await Organization.findById(organizationId);
+      if (!organization) {
+        return res.status(404).json({
+          message: "Organization Not Found",
+          success: false,
+        });
+      }
+      return res.status(200).json({
+          organization,
+          success: true,
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 export const updateOrganization = async (req,res) => {
     try {
         const {name,description,website,location} = req.body;
