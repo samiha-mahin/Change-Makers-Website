@@ -31,3 +31,27 @@ export const registerOrganization = async (req,res) => {
         });
     }
 };
+
+//"getOrganizations" function is like being a business registry admin:
+// 1. A user asks, "What companies have I registered?"
+// 2. You identify them using their ID.
+// 3. You search your database for all companies linked to that ID.
+
+export const getOrganizations = async (req,res) => {
+    try {
+        const userId = req.id;
+        const organizations = await Organization.find({userId});
+        if(!organizations){
+            return res.status(404).json({
+                message:"No organizations found",
+                success:false
+            });
+        }
+        return res.status(200).json({
+            organizations,
+            success:true
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
