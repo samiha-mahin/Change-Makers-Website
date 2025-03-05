@@ -55,3 +55,26 @@ export const getOrganizations = async (req,res) => {
         console.log(error);
     }
 }
+export const updateOrganization = async (req,res) => {
+    try {
+        const {name,description,website,location} = req.body;
+        //cloudinary 
+        
+        const updateData = {name, description, website, location, logo};
+        const organization = await Organization.findByIdAndUpdate(req.params.id,updateData,{new:true});
+        if(!organization){
+            return res.status(404).json({
+                message:"Organization not found",
+                success:false
+            });
+        }
+        return res.status(200).json({
+            message:"Organization updated successfully",
+            organization,
+            success:true
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+};
