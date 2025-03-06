@@ -61,7 +61,7 @@ export const getAppliedDuties = async (req, res) => {
         }); // This fetches all applications made by the user
       if (!application) {
         return res.status(404).json({
-          message: "No applications!",
+          message: "No applications found!",
           success: false,
         });
       }
@@ -73,3 +73,27 @@ export const getAppliedDuties = async (req, res) => {
       console.log(error);
     }
   };
+export const getApplicants = async (req, res) => {
+    try {
+        const dutyId = req.params.id;
+        const duty = await Duty.findById(dutyId).populate({
+            path: 'applications',
+            options: { sort: { createdAt: -1 } },
+            populate: {
+                path : 'applicant',
+            }
+        });
+        if(!duty){
+            return res.status(404).json({
+                message: "Duty not found",
+                success: false
+            })
+        }
+        return res.status(200).json({
+            duty,
+            success: true
+        })    
+    } catch (error) {
+        console.log(error);
+    }
+}
