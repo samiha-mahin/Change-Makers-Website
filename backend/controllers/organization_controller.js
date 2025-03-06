@@ -1,4 +1,6 @@
 import {Organization} from '../models/organization_model.js';
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const registerOrganization = async (req, res) => {
     try {
@@ -85,9 +87,15 @@ export const updateOrganization = async (req,res) => {
     try {
         const {name,description,website,location} = req.body;
         //cloudinary 
+        const file = req.file;
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        const logo = cloudResponse.secure_url;
         
-        const updateData = {name, description, website, location};
+        const updateData = {name, description, website, location, logo};
+
         const organization = await Organization.findByIdAndUpdate(req.params.id,updateData,{new:true});
+
         if(!organization){
             return res.status(404).json({
                 message:"Organization not found",
