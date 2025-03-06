@@ -1,36 +1,44 @@
 import {Organization} from '../models/organization_model.js';
 
-export const registerOrganization = async (req,res) => {
+export const registerOrganization = async (req, res) => {
     try {
-        const {organizationName} = req.body;
-        if(!organizationName){
+        console.log("User ID:", req.id); // Debugging
+
+        const { organizationName } = req.body;
+        if (!organizationName) {
             return res.status(400).json({
-                message:"Organization Name is required",
-                success:false
+                message: "Organization Name is required",
+                success: false
             });
         }
-        let organization = await Organization.findOne({name:organizationName});
-        if(organization){
+
+        let organization = await Organization.findOne({ name: organizationName });
+        if (organization) {
             return res.status(400).json({
-                message:"Organization already exists",
-                success:false
+                message: "Organization already exists",
+                success: false
             });
         }
+
         organization = await Organization.create({
             name: organizationName,
-            userId: req.user._id
-        })
+            userId: req.id // This will fail if req.id is undefined
+        });
+
         return res.status(201).json({
-            message:"Organization created successfully",
+            message: "Organization created successfully",
             organization,
-            success:true
+            success: true
         });
     } catch (error) {
+        console.error("Error in registerOrganization:", error); // Debugging
         return res.status(500).json({
-            message: "Registration for company failed",
+            message: "Registration for Organization failed",
+            error: error.message
         });
     }
 };
+
 
 //"getOrganizations" function is like being a business registry admin:
 // 1. A user asks, "What companies have I registered?"
@@ -78,7 +86,7 @@ export const updateOrganization = async (req,res) => {
         const {name,description,website,location} = req.body;
         //cloudinary 
         
-        const updateData = {name, description, website, location, logo};
+        const updateData = {name, description, website, location};
         const organization = await Organization.findByIdAndUpdate(req.params.id,updateData,{new:true});
         if(!organization){
             return res.status(404).json({

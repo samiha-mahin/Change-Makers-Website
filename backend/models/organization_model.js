@@ -7,19 +7,15 @@ const organizationSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
     },
     website : {
         type: String,
-        required: true
     },
     location: {
         type: String,
-        required: true
     },
     logo : {
         type: String,
-        required: true
     },
     userId : {
         type: mongoose.Schema.Types.ObjectId,
