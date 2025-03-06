@@ -97,3 +97,32 @@ export const getApplicants = async (req, res) => {
         console.log(error);
     }
 }
+export const updateStatus = async (req, res) => {
+    try {
+        const { status } = req.body;
+        if(!status){
+            return res.status(400).json({
+                message: "Status is required",
+                success: false
+            })
+        }
+        const applicationId = req.params.id;
+        const application = await Application.findById(applicationId);
+        if(!application){
+            return res.status(404).json({
+                message: "Application not found",
+                success: false
+            })
+        }
+         //update the status
+        application.status = status.toLowerCase();//(status.toLowerCase() ensures it's in lowercase for consistency)
+        await application.save();
+ 
+        return res.status(200).json({
+             message: "Status updated sucessfully",
+             success: true,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
