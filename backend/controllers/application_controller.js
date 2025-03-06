@@ -45,3 +45,31 @@ export const applyDuty = async (req,res) => {
         console.log(error);
     }
 };
+export const getAppliedDuties = async (req, res) => {
+    try {
+      const userId = req.id;//This ID is used to filter applications submitted by the logged-in user.
+  
+      const application = await Application.find({ applicant: userId }) 
+        .sort({ createdAT: -1 })  //Ensures the most recent applications are shown first.
+        .populate({
+          path: "duty",
+          options: { sort: { createdAT: -1 } },
+          populate: {
+            path: "organization",
+            options: { sort: { createdAT: -1 } },
+          },
+        }); // This fetches all applications made by the user
+      if (!application) {
+        return res.status(404).json({
+          message: "No applications!",
+          success: false,
+        });
+      }
+      return res.status(200).json({
+        application,
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
