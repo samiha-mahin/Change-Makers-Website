@@ -97,7 +97,7 @@ export const getDutyById = async (req,res) =>{
 export const getAdminDuties = async (req,res) =>{
     try {
         const adminId = req.id;
-        const duties = await Job.find({created_by:adminId}).populate({
+        const duties = await Duty.find({created_by:adminId}).populate({
             path:"organization",
             createdAt: -1
         });
