@@ -35,7 +35,7 @@ export const applyDuty = async (req,res) => {
         duty: dutyId,
         applicant: userId
     });
-    Duty.applications.push(newApplication._id);
+    duty.applications.push(newApplication._id);
     await duty.save();
     return res.status(201).json({
         message: "Application submitted successfully",
