@@ -1,50 +1,62 @@
 import {Application} from '../models/application_model.js';
 import { Duty } from '../models/duty_model.js';
 
-export const applyDuty = async (req,res) => {
+export const applyDuty = async (req, res) => {
     try {
         const userId = req.id;
-    const dutyId = req.params.id;
-    if(!dutyId){
-        return res.status(400).json({
-            message: "Duty ID is required",
-            success: false
-        })
-    }
-     //check if user already applied for the duty
-    const existingApplication = await Application.findOne({
-        duty: dutyId,
-        applicant: userId
-    });
-    if(existingApplication){
-        return res.status(400).json({
-            message: "You have already applied for this duty",
-            success: false
-        })
-    }
-    //check if duty exists
-    const duty = await Duty.findById(dutyId);
-    if(!duty){
-        return res.status(404).json({
-            message: "Duty not found",
-            success: false
-        })
-    }
-    //create new application
-    const newApplication = new Application({
-        duty: dutyId,
-        applicant: userId
-    });
-    duty.applications.push(newApplication._id);
-    await duty.save();
-    return res.status(201).json({
-        message: "Application submitted successfully",
-        success: true
-    })
+        const dutyId = req.params.id;
+        
+        if (!dutyId) {
+            return res.status(400).json({
+                message: "Duty ID is required",
+                success: false
+            });
+        }
+
+        // Check if user already applied
+        const existingApplication = await Application.findOne({
+            duty: dutyId,
+            applicant: userId
+        });
+
+        if (existingApplication) {
+            return res.status(400).json({
+                message: "You have already applied for this duty",
+                success: false
+            });
+        }
+
+        // Check if duty exists
+        const duty = await Duty.findById(dutyId);
+        if (!duty) {
+            return res.status(404).json({
+                message: "Duty not found",
+                success: false
+            });
+        }
+
+        // Create and save new application
+        const newApplication = new Application({
+            duty: dutyId,
+            applicant: userId
+        });
+
+        await newApplication.save();  // ❗ Now saving application to the DB
+
+        // Add the application ID to the duty
+        duty.applications.push(newApplication._id);
+        await duty.save();
+
+        return res.status(201).json({
+            message: "Application submitted successfully",
+            success: true
+        });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({ message: "Server error", success: false });
     }
 };
+
 export const getAppliedDuties = async (req, res) => {
     try {
       const userId = req.id;//This ID is used to filter applications submitted by the logged-in user.
@@ -100,29 +112,40 @@ export const getApplicants = async (req, res) => {
 export const updateStatus = async (req, res) => {
     try {
         const { status } = req.body;
-        if(!status){
+        if (!status) {
             return res.status(400).json({
                 message: "Status is required",
                 success: false
-            })
+            });
         }
+
         const applicationId = req.params.id;
+        console.log("Received Application ID:", applicationId); // Check if ID is coming correctly
+
+        // Fetch the application
         const application = await Application.findById(applicationId);
-        if(!application){
+        console.log("Application Found:", application); // Check if application exists
+
+        if (!application) {
             return res.status(404).json({
                 message: "Application not found",
                 success: false
-            })
+            });
         }
-         //update the status
-        application.status = status.toLowerCase();//(status.toLowerCase() ensures it's in lowercase for consistency)
+
+        // Update the status
+        application.status = status.toLowerCase();
         await application.save();
- 
+
         return res.status(200).json({
-             message: "Status updated sucessfully",
-             success: true,
+            message: "Status updated successfully",
+            success: true,
         });
     } catch (error) {
-        console.log(error);
+        console.error("Error updating status:", error);
+        res.status(500).json({
+            message: "Server error",
+            success: false
+        });
     }
-}
+};
