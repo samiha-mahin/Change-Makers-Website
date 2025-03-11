@@ -14,18 +14,20 @@ const Navbar = () => {
           animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           style={{
-            backgroundImage: "linear-gradient(to right, #047857, #facc15, #dc2626)",
+            backgroundImage:
+              "linear-gradient(to right, #047857, #facc15, #dc2626)",
             backgroundSize: "200% 200%",
           }}
         >
-          Change<span className="text-transparent bg-gradient-to-r from-red-600 to-red-400 bg-clip-text">Makers</span>
+          Change
+          <span className="text-transparent bg-gradient-to-r from-red-600 to-red-400 bg-clip-text">
+            Makers
+          </span>
         </motion.h1>
-         {/* Mobile Menu Button */}
-         <button className="md:hidden" onClick={()=>setIsOpen(!isOpen)}>
-          {
-            isOpen? <X size={28} /> : <Menu size={28}/> 
-          }
-         </button>
+        {/* Mobile Menu Button */}
+        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
     </nav>
   );
