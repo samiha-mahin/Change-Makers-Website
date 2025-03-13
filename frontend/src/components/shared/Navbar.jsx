@@ -3,7 +3,9 @@ import { Button } from "../ui/button";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Popover, PopoverTrigger } from "../ui/popover";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 const Navbar = () => {
   const {user} = useSelector(store => store.auth);
@@ -35,14 +37,14 @@ const Navbar = () => {
         </button>
 
          {/* Desktop Navigation */}
-         <div className="hidden md:flex items-center gap-12">
-          <ul className="flex items-center font-medium gap-5">
-          {user && user.role === "recruiter" ? (
+        <div className="hidden md:flex items-center gap-12">
+          <ul className="flex items-center text-gray-600 font-medium gap-5">
+           {user && user.role === "recruiter" ? (
               <>
                 <Link to="/admin/organizations"><li>Organizations</li></Link>
                 <Link to="/admin/duties"><li>Duties</li></Link>
               </>
-            ) : (
+              ) : (
               <>
                 <Link to="/"><li>Home</li></Link>
                 <Link to="/duties"><li>Duties</li></Link>
@@ -50,7 +52,24 @@ const Navbar = () => {
               </>
             )}
           </ul>
-         </div>
+          {/* Authentication/Profile Section */}
+          {
+            !user ?(
+              <div className="flex items-center gap-5">
+                <Link to="/login"><Button className="text-gray-600" variant="outline">Login</Button></Link>
+                <Link to="/signup"><Button className="text-white bg-green-700 hover:bg-green-900">Sign Up</Button></Link>
+              </div>
+            ) : (
+              <Popover>
+                <PopoverTrigger>
+                  <Avatar>
+                    <AvatarImage src={user?.profile?.profilePhoto}/>
+                  </Avatar>
+                </PopoverTrigger>
+              </Popover>
+            )
+          }
+        </div>
       </div>
     </nav>
   );
