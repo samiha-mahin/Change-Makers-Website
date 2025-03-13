@@ -35,6 +35,22 @@ const Navbar = () => {
         </button>
 
          {/* Desktop Navigation */}
+         <div className="hidden md:flex items-center gap-12">
+          <ul className="flex items-center font-medium gap-5">
+          {user && user.role === "recruiter" ? (
+              <>
+                <Link to="/admin/organizations"><li>Organizations</li></Link>
+                <Link to="/admin/duties"><li>Duties</li></Link>
+              </>
+            ) : (
+              <>
+                <Link to="/"><li>Home</li></Link>
+                <Link to="/duties"><li>Duties</li></Link>
+                <Link to="/browse"><li>Browse</li></Link>
+              </>
+            )}
+          </ul>
+         </div>
       </div>
     </nav>
   );
