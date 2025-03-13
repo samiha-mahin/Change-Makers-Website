@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const {user} = useSelector(store => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <nav>
@@ -28,6 +33,8 @@ const Navbar = () => {
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
+
+         {/* Desktop Navigation */}
       </div>
     </nav>
   );
