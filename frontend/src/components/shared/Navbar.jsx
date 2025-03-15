@@ -22,7 +22,7 @@ const Navbar = () => {
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           style={{
             backgroundImage:
-              "linear-gradient(to right, #047857, #facc15, #dc2626)",
+              "linear-gradient(to right, #047857, #10b981, #d1fa00)",
             backgroundSize: "200% 200%",
           }}
         >
