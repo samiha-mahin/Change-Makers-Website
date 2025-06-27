@@ -22,7 +22,7 @@ const Navbar = () => {
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           style={{
             backgroundImage:
-              "linear-gradient(to right, #047857, #10b981, #d1fa00)",
+              "linear-gradient(to right, #6DA683, #467057, #345441)",
             backgroundSize: "200% 200%",
           }}
         >
@@ -57,7 +57,7 @@ const Navbar = () => {
             !user ?(
               <div className="flex items-center gap-5">
                 <Link to="/login"><Button className="text-gray-600" variant="outline">Login</Button></Link>
-                <Link to="/signup"><Button className="text-white bg-green-700 hover:bg-green-900">Sign Up</Button></Link>
+                <Link to="/signup"><Button className="text-white bg-[#467057] hover:bg-[#2A4B37]">Sign Up</Button></Link>
               </div>
             ) : (
               <Popover>
