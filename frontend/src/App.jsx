@@ -4,6 +4,7 @@ import './App.css'
 import Home from './components/Home'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
+import Organizations from './components/admin/Organizations'
 
 const App = () => {
   return (
@@ -13,6 +14,8 @@ const App = () => {
         <Route path='/' element={<Home/>} />
         <Route path='/login'element={<Login/>}/>
         <Route path='/signup'element={<Signup/>}/>
+        //admin routes
+        <Route path='/admin/organizations' element={<Organizations/>}/>
       </Routes>
       </BrowserRouter>
     </>
