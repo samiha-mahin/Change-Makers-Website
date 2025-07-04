@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const dutySlice = createSlice({
-    ame:"duty",
+    name:"duty",
     initialState: {
         allDuties:[],
         allAdminDuties:[],
