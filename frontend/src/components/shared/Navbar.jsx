@@ -59,7 +59,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-12">
           <ul className="flex items-center text-gray-600 font-medium gap-5">
-            {user && user.role === "recruiter" ? (
+            {user && user.role === "admin" ? (
               <>
                 <Link to="/admin/organizations"><li>Organizations</li></Link>
                 <Link to="/admin/duties"><li>Duties</li></Link>
@@ -128,7 +128,7 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden flex flex-col items-center gap-4 py-4 border-t bg-white">
           <ul className="flex flex-col items-center font-medium gap-4">
-            {user && user.role === "recruiter" ? (
+            {user && user.role === "admin" ? (
               <>
                 <Link to="/admin/organizations"><li>Organizations</li></Link>
                 <Link to="/admin/duties"><li>Duties</li></Link>
