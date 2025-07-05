@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
 import organizationSlice from "./organizationSlice"
 import dutySlice from "./dutySlice"
+import applicationSlice from "./applicationSlice";
 import {
     persistStore,
     persistReducer,
@@ -22,7 +23,8 @@ import {
   const rootReducer = combineReducers({
     auth: authSlice,
     organization: organizationSlice,
-    duty : dutySlice
+    duty : dutySlice,
+    application: applicationSlice,
   })
   
   const persistedReducer = persistReducer(persistConfig, rootReducer)
