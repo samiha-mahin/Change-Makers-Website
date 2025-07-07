@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import Organizations from './Organizations';
+import { Table, TableCaption } from '../ui/table';
 
 const OrganizationsTable = () => {
   const {organizations , searchOrganizationByText} = useSelector((store)=> store.organization);
@@ -19,7 +20,9 @@ const OrganizationsTable = () => {
   },[organizations, searchOrganizationByText]);
   
   return (
-    <div>OrganizationsTable</div>
+   <Table>
+     <TableCaption>A list of your posted duties</TableCaption>
+   </Table>
   )
 }
 
