@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import Organizations from "./Organizations";
 import {
   Table,
   TableBody,
@@ -12,29 +10,11 @@ import {
   TableRow,
 } from "../ui/table";
 import { Avatar } from "../ui/avatar";
-import { PopoverContent, PopoverTrigger } from "../ui/popover";
+import { PopoverContent, PopoverTrigger, Popover } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 
-const OrganizationsTable = () => {
-  const { organizations, searchOrganizationByText } = useSelector(
-    (store) => store.organization
-  );
+const OrganizationsTable = ({ organizations }) => {
   const navigate = useNavigate();
-  const [filterOrganization, setFilterOrganization] = useState(organizations);
-
-  useEffect(() => {
-    const filteredOrganization =
-      organizations.length >= 0 &&
-      organizations.filter((organization) => {
-        if (!searchOrganizationByText) {
-          return true;
-        }
-        return organization?.name
-          ?.toLowerCase()
-          .includes(searchOrganizationByText.toLowerCase());
-      });
-    setFilterOrganization(filteredOrganization);
-  }, [organizations, searchOrganizationByText]);
 
   return (
     <Table>
@@ -48,11 +28,11 @@ const OrganizationsTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {filterOrganization.map((organization) => (
-          <tr>
+        {organizations.map((organization) => (
+          <TableRow key={organization._id}>
             <TableCell>
               <Avatar>
-                <AvatarImage src={organization.logo} />
+                <img src={organization.logo} alt={organization.name} />
               </Avatar>
             </TableCell>
             <TableCell>{organization.name}</TableCell>
@@ -63,21 +43,19 @@ const OrganizationsTable = () => {
                   <MoreHorizontal />
                 </PopoverTrigger>
                 <PopoverContent className="w-32">
-                  <div className="flex items-center gap-2 w-fit cursor-pointer">
-                    <div
-                      onClick={() =>
-                        navigate(`/admin/companies/${organization._id}`)
-                      }
-                      className="flex items-center gap-2 w-fit cursor-pointer"
-                    >
-                      <Edit2 className="w-4" />
-                      <span>Edit</span>
-                    </div>
+                  <div
+                    onClick={() =>
+                      navigate(`/admin/companies/${organization._id}`)
+                    }
+                    className="flex items-center gap-2 w-fit cursor-pointer"
+                  >
+                    <Edit2 className="w-4" />
+                    <span>Edit</span>
                   </div>
                 </PopoverContent>
               </Popover>
             </TableCell>
-          </tr>
+          </TableRow>
         ))}
       </TableBody>
     </Table>
