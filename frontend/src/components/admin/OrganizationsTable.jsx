@@ -45,7 +45,7 @@ const OrganizationsTable = ({ organizations }) => {
                 <PopoverContent className="w-32">
                   <div
                     onClick={() =>
-                      navigate(`/admin/companies/${organization._id}`)
+                      navigate(`/admin/organizations/${organization._id}`)
                     }
                     className="flex items-center gap-2 w-fit cursor-pointer"
                   >
