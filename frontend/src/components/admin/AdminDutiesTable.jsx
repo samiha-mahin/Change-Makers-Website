@@ -26,7 +26,9 @@ const AdminDutiesTable = () => {
       ? allAdminDuties.filter((duty) => {
           if (!searchDutyByText) return true;
           return (
-            duty?.tittle?.toLowerCase().includes(searchDutyByText.toLowerCase()) ||
+            duty?.tittle
+              ?.toLowerCase()
+              .includes(searchDutyByText.toLowerCase()) ||
             duty?.organization?.name
               ?.toLowerCase()
               ?.includes(searchDutyByText.toLowerCase())
@@ -100,7 +102,9 @@ const AdminDutiesTable = () => {
                 <TableRow key={duty._id}>
                   <TableCell>{duty?.organization?.name || "N/A"}</TableCell>
                   <TableCell>{duty?.tittle || "N/A"}</TableCell>
-                  <TableCell>{duty?.createdAt?.split("T")[0] || "N/A"}</TableCell>
+                  <TableCell>
+                    {duty?.createdAt?.split("T")[0] || "N/A"}
+                  </TableCell>
                   <TableCell className="text-right cursor-pointer">
                     <Popover>
                       <PopoverTrigger>
@@ -109,7 +113,9 @@ const AdminDutiesTable = () => {
                       <PopoverContent className="w-32">
                         <div className="flex flex-col items-start gap-2">
                           <div
-                            onClick={() => navigate(`/admin/duties/${duty._id}`)}
+                            onClick={() =>
+                              navigate(`/admin/duties/${duty._id}`)
+                            }
                             className="flex items-center gap-2 cursor-pointer"
                           >
                             <Edit2 className="w-4" />
