@@ -7,19 +7,21 @@ import { useDispatch, useSelector } from 'react-redux'
 const useGetAllDuties = () => {
  const dispatch = useDispatch();
  const {searchedQuery} = useSelector(store=>store.duty);
- useEffect(()=>{
-    const fecthAllDuties = async()=>{
-        try {
-            const res = await axios.get(`${DUTY_API}/get?keyword=${searchedQuery}`,{withCredentials:true});
-            if(res.data.success){
-                dispatch(setAllDuties(res.data.jobs));
-            }
-        } catch (error) {
-            console.log(error);
-        }
+ useEffect(() => {
+  const fetchAllDuties = async () => {
+    try {
+      const query = searchedQuery ? `?keyword=${searchedQuery}` : "";
+      const res = await axios.get(`${DUTY_API}/get${query}`, { withCredentials: true });
+      if (res.data.success) {
+        dispatch(setAllDuties(res.data.duties));
+      }
+    } catch (error) {
+      console.log(error);
     }
-    fecthAllDuties();
- },[])
+  };
+
+  fetchAllDuties();
+}, [searchedQuery]);
 }
 
 export default useGetAllDuties;

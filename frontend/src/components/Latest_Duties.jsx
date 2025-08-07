@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import DutyCards from "./DutyCards";
+import useGetAllDuties from "@/hooks/useGetAllDuties";
 
 const Latest_Duties = () => {
   const { allDuties } = useSelector((store) => store.duty);
