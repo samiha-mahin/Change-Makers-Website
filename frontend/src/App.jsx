@@ -10,6 +10,7 @@ import OrganizationSetup from './components/admin/OrganizationSetup'
 import AdminDuties from './components/admin/AdminDuties'
 import PostDuty from './components/admin/PostDuty'
 import Applicants from './components/admin/Applicants'
+import ProtectedRoute from './components/admin/ProtectedRoute'
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
         <Route path='/login'element={<Login/>}/>
         <Route path='/signup'element={<Signup/>}/>
         //admin routes
-        <Route path='/admin/organizations' element={<Organizations/>}/>
+        <Route path='/admin/organizations' element={<ProtectedRoute><Organizations/></ProtectedRoute>}/>
         <Route path="/admin/organizations/create" element={<OrganizationCreate/>}/>
         <Route path="/admin/organizations/:id" element={<OrganizationSetup/>}/>
         <Route path="/admin/duties" element={<AdminDuties/>}/>
