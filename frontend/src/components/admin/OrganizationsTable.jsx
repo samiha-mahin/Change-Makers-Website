@@ -18,7 +18,7 @@ const OrganizationsTable = ({ organizations }) => {
 
   return (
     <Table>
-      <TableCaption>A list of your posted duties</TableCaption>
+      <TableCaption>A list of your posted organizations</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Logo</TableHead>
