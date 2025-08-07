@@ -14,6 +14,7 @@ import ProtectedRoute from './components/admin/ProtectedRoute'
 import Duties from './components/Duties'
 import Browse from './components/Browse'
 import DutyDescription from './components/DutyDescription'
+import Profile from './components/Profile'
 
 const App = () => {
   return (

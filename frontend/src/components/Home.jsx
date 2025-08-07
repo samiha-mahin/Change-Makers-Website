@@ -7,6 +7,7 @@ import useGetAllDuties from '@/hooks/useGetAllDuties'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Latest_Duties from './Latest_Duties'
+import About from './About'
 
 const Home = () => {
   useGetAllDuties()
