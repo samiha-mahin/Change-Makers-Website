@@ -4,6 +4,7 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Duty = ({ duty }) => {
   const navigate = useNavigate();
@@ -15,12 +16,28 @@ const Duty = ({ duty }) => {
     return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
   };
 
+  const pay = async () => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/api/bkash/payment/create",
+        { amount: 50, orderId: duty?._id },  // Pass duty._id as orderId for reference
+        { withCredentials: true }
+      );
+      window.location.href = data.bkashURL;
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+      alert("Payment failed, please try again.");
+    }
+  };
+
   return (
     <div className="p-5 md:p-6 rounded-lg shadow-lg bg-white border border-gray-200 w-full max-w-lg md:max-w-2xl mx-auto">
       {/* Top Section */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-600">
-          {daysAgoFunction(duty?.createdAt) === 0 ? "Today" : `${daysAgoFunction(duty?.createdAt)} days ago`}
+          {daysAgoFunction(duty?.createdAt) === 0
+            ? "Today"
+            : `${daysAgoFunction(duty?.createdAt)} days ago`}
         </p>
         <Button variant="outline" className="rounded-full" size="icon">
           <Bookmark />
@@ -32,7 +49,9 @@ const Duty = ({ duty }) => {
           <AvatarImage src={duty?.organization?.logo} />
         </Avatar>
         <div>
-          <h1 className="font-semibold text-md md:text-lg">{duty?.organization?.name}</h1>
+          <h1 className="font-semibold text-md md:text-lg">
+            {duty?.organization?.name}
+          </h1>
           <p className="text-sm text-gray-600">{duty?.organization?.location}</p>
         </div>
       </div>
@@ -40,7 +59,9 @@ const Duty = ({ duty }) => {
       {/* Duty Title & Description */}
       <div>
         <h1 className="font-bold text-lg md:text-xl my-2">{duty?.tittle}</h1>
-        <p className="text-sm md:text-base text-gray-600 truncate md:line-clamp-2">{duty?.description}</p>
+        <p className="text-sm md:text-base text-gray-600 truncate md:line-clamp-2">
+          {duty?.description}
+        </p>
       </div>
 
       {/* Badges */}
@@ -65,11 +86,15 @@ const Duty = ({ duty }) => {
         >
           Details
         </Button>
-        <Button className="bg-[#467057] hover:bg-[#2A4B37] w-full sm:w-auto">
+        <Button
+          onClick={pay}
+          className="bg-[#467057] hover:bg-[#2A4B37] w-full sm:w-auto"
+        >
           Donate
         </Button>
       </div>
     </div>
   );
 };
-export default Duty
+
+export default Duty;
