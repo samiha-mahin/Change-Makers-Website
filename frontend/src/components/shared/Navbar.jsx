@@ -103,10 +103,10 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-3">
-                  {user.role === "student" && (
+                  {user.role === "user" && (
                     <Button variant="link" className="flex items-center gap-2" asChild>
                       <Link to="/profile">
-                        <User2 /> View Profile
+                        <User2/> View Profile
                       </Link>
                     </Button>
                   )}
