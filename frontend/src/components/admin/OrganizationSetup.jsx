@@ -83,7 +83,7 @@ const OrganizationSetup = () => {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 sm:p-8">
             <Button
               type="button"
-              onClick={() => navigate('/admin/companies')}
+              onClick={() => navigate('/admin/organizations')}
               variant="outline"
               className="flex items-center gap-2 text-gray-500 font-semibold"
             >
