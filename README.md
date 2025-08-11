@@ -1,5 +1,7 @@
-<img width="1920" height="907" alt="Screenshot (296)" src="https://github.com/user-attachments/assets/41289416-8748-45b9-b795-abc4fb4968dc" />
+
 # Change-Makers (Volunteer Duty Platform)
+
+<img width="1920" height="907" alt="Screenshot (296)" src="https://github.com/user-attachments/assets/41289416-8748-45b9-b795-abc4fb4968dc" />
 
 A full-stack volunteer management platform built using the **MERN** (MongoDB, Express.js, React.js, Node.js) stack.
 This project enables organizations to post volunteer opportunities and manage applicants, while volunteers can browse duties, apply, and donate to support causes.
